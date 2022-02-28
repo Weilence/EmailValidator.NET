@@ -8,6 +8,13 @@ namespace EmailValidator.NET
 {
     public class EmailValidator
     {
+        private readonly string _validateEmail;
+
+        public EmailValidator(string validateEmail = null)
+        {
+            _validateEmail = validateEmail;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -55,7 +62,7 @@ namespace EmailValidator.NET
 
             //////////////////
 
-            LookupClient dnsClient = new LookupClient() { UseTcpOnly = true };
+            LookupClient dnsClient = new LookupClient(new LookupClientOptions() { UseTcpOnly = true });
 
             var mxRecords = dnsClient.Query(mailAddress.Host, QueryType.MX).AllRecords.MxRecords().ToList();
 
@@ -72,7 +79,7 @@ namespace EmailValidator.NET
                     SmtpClient smtpClient = new SmtpClient(mxRecord.Exchange.Value);
                     SmtpStatusCode resultCode;
 
-                    if (smtpClient.CheckMailboxExists(email, out resultCode))
+                    if (smtpClient.CheckMailboxExists(email, _validateEmail ?? email, out resultCode))
                     {
                         switch (resultCode)
                         {

@@ -24,7 +24,7 @@ namespace EmailValidator.NET
             this.port = port;
         }
 
-        public bool CheckMailboxExists(string email, out SmtpStatusCode result)
+        public bool CheckMailboxExists(string email, string validateEmail, out SmtpStatusCode result)
         {
             try
             {
@@ -43,12 +43,14 @@ namespace EmailValidator.NET
 
                     this.AcceptResponse(streamReader, SmtpStatusCode.ServiceReady);
 
-                    string mailHost = (new MailAddress(email)).Host;
+                    string mailHost = (new MailAddress(validateEmail)).Host;
 
                     this.SendCommand(networkStream, streamReader, "HELO " + mailHost, SmtpStatusCode.Ok);
-                    this.SendCommand(networkStream, streamReader, "MAIL FROM:<check@" + mailHost + ">", SmtpStatusCode.Ok);
+                    this.SendCommand(networkStream, streamReader, "MAIL FROM:<check@" + mailHost + ">",
+                        SmtpStatusCode.Ok);
                     SmtpResponse response = this.SendCommand(networkStream, streamReader, "RCPT TO:<" + email + ">");
-                    this.SendCommand(networkStream, streamReader, "QUIT", SmtpStatusCode.ServiceClosingTransmissionChannel, SmtpStatusCode.MailboxUnavailable);
+                    this.SendCommand(networkStream, streamReader, "QUIT",
+                        SmtpStatusCode.ServiceClosingTransmissionChannel, SmtpStatusCode.MailboxUnavailable);
 
                     result = response.Code;
 
@@ -68,7 +70,8 @@ namespace EmailValidator.NET
             return false;
         }
 
-        private SmtpResponse SendCommand(NetworkStream networkStream, StreamReader streamReader, string command, params SmtpStatusCode[] goodReplys)
+        private SmtpResponse SendCommand(NetworkStream networkStream, StreamReader streamReader, string command,
+            params SmtpStatusCode[] goodReplys)
         {
             var dataBuffer = Encoding.ASCII.GetBytes(command + "\r\n");
             networkStream.Write(dataBuffer, 0, dataBuffer.Length);
@@ -101,7 +104,7 @@ namespace EmailValidator.NET
 
         private SmtpStatusCode GetResponseCode(string response)
         {
-            return (SmtpStatusCode) Enum.Parse(typeof(SmtpStatusCode), response.Substring(0, 3));
+            return (SmtpStatusCode)Enum.Parse(typeof(SmtpStatusCode), response.Substring(0, 3));
         }
     }
 }

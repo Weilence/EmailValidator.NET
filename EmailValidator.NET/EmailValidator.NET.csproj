@@ -1,20 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.1.0</Version>
-    <Authors>Alexander Selishchev</Authors>
-    <Company>Alexander Selishchev</Company>
-    <Product>EmailValidator.NET</Product>
-    <Description>C# SMTP and format email validator</Description>
-    <PackageLicense>https://github.com/adoconnection/EmailValidator.NET/blob/master/LICENSE.md</PackageLicense>
-    <PackageProjectUrl>https://github.com/adoconnection/EmailValidator.NET</PackageProjectUrl>
-    <PackageTags>Email Validation SMTP</PackageTags>
-    <PackageReleaseNotes>convert to .Net Standard library</PackageReleaseNotes>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Version>1.1.0</Version>
+        <Authors>Weilence</Authors>
+        <Company>Weilence</Company>
+        <Product>EmailValidator.NETCore</Product>
+        <Description>C# SMTP and format email validator</Description>
+        <PackageId>EmailValidator.NETCore</PackageId>
+        <PackageLicense>https://github.com/Weilence/EmailValidator.NETCore/blob/master/LICENSE.md</PackageLicense>
+        <PackageProjectUrl>https://github.com/Weilence/EmailValidator.NETCore</PackageProjectUrl>
+        <PackageTags>Email Validation SMTP</PackageTags>
+        <PackageReleaseNotes>Update dependencies for remove compile warning</PackageReleaseNotes>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DnsClient" Version="1.2.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="ARSoft.Tools.Net.Core" Version="2.3.0" />
+        <PackageReference Include="DnsClient" Version="1.6.0" />
+    </ItemGroup>
 
 </Project>
